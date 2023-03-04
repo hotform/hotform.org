@@ -1,0 +1,16 @@
+{
+  "name": "hotform.org",
+  "version": "1.0.0",
+  "description": "The hotform documentation website",
+  "author": "Derry Sucari <derrysucari01@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/hotform/hotform.org/issues"
+  },
+  "homepage": "https://github.com/hotform/hotform.org#readme",
+  "packageManager": "yarn@3.4.1",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hotform/hotform.org.git"
+  }
+}
