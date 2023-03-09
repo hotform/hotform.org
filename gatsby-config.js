@@ -5,6 +5,12 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`
 });
 
+const wrapESMPlugin = name => options => async (...args) => {
+  const mod = await import(name);
+  const plugin = mod.default(options);
+  return plugin(...args);
+}
+
 module.exports = {
   plugins: [
     'gatsby-plugin-emotion',
@@ -29,15 +35,20 @@ module.exports = {
       resolve: 'gatsby-plugin-mdx',
       options: {
         gatsbyRemarkPlugins: [
-          'gatsby-remark-images',
-          'gatsby-remark-prismjs'
+          'gatsby-remark-images'
         ],
         mdxOptions: {
           rehypePlugins: [
             [
-              require('rehype-slug'),
+              wrapESMPlugin('rehype-slug'),
               {
                 removeAccents: true
+              }
+            ],
+            [
+              wrapESMPlugin('rehype-highlight'),
+              {
+                prefix: `${process.env.GATSBY_APP_CLASS_NAME_PREFIX}-`
               }
             ]
           ]
