@@ -55,6 +55,7 @@ module.exports = {
     }
   ].filter(Boolean),
   siteMetadata: {
+    ogImageSource: `${process.env.GATSBY_URL_ROOT}/images/og-image.png`,
     siteUrl: process.env.GATSBY_URL_ROOT
   }
 };
