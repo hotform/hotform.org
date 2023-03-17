@@ -12,7 +12,7 @@ import {
 export interface SiteHeadProps extends React.PropsWithChildren{
   canonicalURL?: string;
   description: string;
-  keywords: Array<string>;
+  keywords?: Array<string>;
   ogImageSource?: string;
   title: string;
 }
