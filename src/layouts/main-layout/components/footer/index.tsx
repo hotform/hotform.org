@@ -25,6 +25,7 @@ const Footer: React.FC<MainLayoutFooterProps> = ({ currentEdge }) => {
         currentEdge?.node && (
           <SC.EditLink
             href={ `${config.repositoryURL}/edit/master/content${currentEdge.node.fields.slug}index.mdx` }
+            rel="noreferrer"
             target="_blank"
           >
             <HiOutlinePencil/>
