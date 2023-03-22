@@ -16,6 +16,7 @@ export const Container = styled.header(({ theme }) => ({
   outlineColor: theme.colors.divider,
   outlineStyle: 'solid',
   outlineWidth: 1,
+  zIndex: 1000,
   [theme.breakpoints.down('md')]: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -76,26 +77,29 @@ export const LogoContent = styled(Link)(({ theme }) => ({
 }));
 
 export interface NavigationBarContainerProps{
-  wrapperSize?: number;
   collapse?: boolean;
+  wrapperSize?: number;
 }
 
 export const NavigationBarContainer = styled.div<NavigationBarContainerProps>(({
-  wrapperSize = 0,
-  collapse = false
+  collapse = false,
+  theme,
+  wrapperSize = 0
 }) => ({
-  overflow: 'hidden',
-  height: 0,
+  overflow: 'visible',
   width: '100%',
-  opacity: 0,
-  transitionDuration: '0.2s',
-  transitionProperty: 'all',
-  transitionTimingFunction: 'ease-in-out',
-  ...(!collapse && {
-    overflow: 'visible',
-    height: wrapperSize,
-    opacity: 1
-  })
+  height: wrapperSize,
+  opacity: 1,
+  [theme.breakpoints.down('md')]: {
+    transitionDuration: '0.25s',
+    transitionProperty: 'all',
+    transitionTimingFunction: 'ease-in-out',
+    ...(collapse && {
+      overflow: 'hidden',
+      height: 0,
+      opacity: 0
+    })
+  }
 }));
 
 export const NavigationBar = styled.nav(() => ({
@@ -143,4 +147,4 @@ export const MenuLink = styled(Link)(() => ({
 
 MenuLink.defaultProps = {
   activeClassName: 'active'
-}
+};
