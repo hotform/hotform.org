@@ -5,6 +5,15 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`
 });
 
+const rehypeMetaAsAttributes = () => async tree => {
+  const { visit } = await import('unist-util-visit');
+  return visit(tree, 'element', node => {
+    if(node.tagName === 'code' && node.data && node.data.meta){
+      node.properties.meta = node.data.meta;
+    }
+  });
+}
+
 const wrapESMPlugin = name => options => async (...args) => {
   const mod = await import(name);
   const plugin = mod.default(options);
@@ -39,16 +48,11 @@ module.exports = {
         ],
         mdxOptions: {
           rehypePlugins: [
+            rehypeMetaAsAttributes,
             [
               wrapESMPlugin('rehype-slug'),
               {
                 removeAccents: true
-              }
-            ],
-            [
-              wrapESMPlugin('rehype-highlight'),
-              {
-                prefix: `${process.env.GATSBY_APP_CLASS_NAME_PREFIX}-`
               }
             ]
           ]
