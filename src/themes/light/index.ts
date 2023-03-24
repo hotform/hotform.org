@@ -1,5 +1,5 @@
 import colors from './colors';
-import highlightStyles from './highlight-styles';
+import sandpackTheme from './sandpack-theme';
 
 /* Shared */
 import {
@@ -16,8 +16,8 @@ const lightTheme: ThemeBase = {
   breakpoints,
   colors,
   fontSizes,
-  highlightStyles,
   letterSpacings,
+  sandpackTheme,
   sizes,
   spacing,
   typography

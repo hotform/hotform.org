@@ -16,12 +16,15 @@ import {
   SerializedStyles
 } from '@emotion/react';
 
+/* Sandpack */
+import { SandpackTheme } from '@codesandbox/sandpack-react';
+
 export interface ThemeBase{
   breakpoints: ThemeBreakpoints;
   colors: ThemeColors;
   fontSizes: ThemeTypographyFontFn;
-  highlightStyles?: CSSObject;
   letterSpacings: ThemeTypographyFontFn;
+  sandpackTheme: SandpackTheme;
   sizes: ThemeSizes;
   spacing: ThemeSpacing;
   typography: ThemeTypography;
@@ -40,7 +43,6 @@ export const getFontFace = (label: string, source: ThemeFontSource): CSSObject =
 
 export const getGlobalStyles = (theme: ThemeBase): SerializedStyles => css(
   ...Object.entries<ThemeFont>(theme.typography).map(([ , value ]) => value.sources.map(source => getFontFace(value.label, source))).flat(),
-  theme.highlightStyles,
   {
     '*': {
       boxSizing: 'border-box'
@@ -63,7 +65,16 @@ export const getGlobalStyles = (theme: ThemeBase): SerializedStyles => css(
     },
     code: {
       overflowWrap: 'break-word',
-      letterSpacing: 0
+      padding: '0.2em 0.4em',
+      letterSpacing: 0,
+      fontSize: '90%',
+      background: '#f6f8fa',
+      borderRadius: 5
+    },
+    'pre code': {
+      display: 'block',
+      overflowX: 'auto',
+      padding: '1em'
     },
     a: {
       textDecoration: 'none',
