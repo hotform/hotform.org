@@ -8279,6 +8279,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"github-slugger@npm:^1.1.1":
+  version: 1.5.0
+  resolution: "github-slugger@npm:1.5.0"
+  checksum: c70988224578b3bdaa25df65973ffc8c24594a77a28550c3636e495e49d17aef5cdb04c04fa3f1744babef98c61eecc6a43299a13ea7f3cc33d680bf9053ffbe
+  languageName: node
+  linkType: hard
+
 "github-slugger@npm:^2.0.0":
   version: 2.0.0
   resolution: "github-slugger@npm:2.0.0"
@@ -8781,7 +8788,7 @@ __metadata:
     gatsby-source-filesystem: ^5.7.0
     react: ^18.2.0
     react-dom: ^18.2.0
-    rehype-slug: ^5.1.0
+    rehype-slug-custom-id: ^1.1.0
     tsconfig-paths-webpack-plugin: ^4.0.0
     typescript: ^4.9.5
   languageName: unknown
@@ -13054,18 +13061,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehype-slug@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "rehype-slug@npm:5.1.0"
+"rehype-slug-custom-id@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "rehype-slug-custom-id@npm:1.1.0"
   dependencies:
     "@types/hast": ^2.0.0
-    github-slugger: ^2.0.0
+    github-slugger: ^1.1.1
     hast-util-has-property: ^2.0.0
     hast-util-heading-rank: ^2.0.0
     hast-util-to-string: ^2.0.0
+    lodash: ^4.17.21
     unified: ^10.0.0
     unist-util-visit: ^4.0.0
-  checksum: 2a7c17fd74d83040e2f2ed2085b0a3274c19feb2c29eba6553fe007ff887c31f21b8aa6e07eaf59f4de610a5293c6339c59fafa8e231c43949a2f136e6ab6187
+  checksum: 1296972155b7246e07afc7d19b98225329dfe27477c037bc2019795f7da0f4f8fcb0aff0ab6014cea295cbf7b74cf07993a7bcee0e8b6949128131ffefcb40fa
   languageName: node
   linkType: hard
 

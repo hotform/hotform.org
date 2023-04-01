@@ -50,8 +50,9 @@ module.exports = {
           rehypePlugins: [
             rehypeMetaAsAttributes,
             [
-              wrapESMPlugin('rehype-slug'),
+              wrapESMPlugin('rehype-slug-custom-id'),
               {
+                enableCustomId: true,
                 removeAccents: true
               }
             ]
