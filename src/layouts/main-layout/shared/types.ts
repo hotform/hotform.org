@@ -16,3 +16,8 @@ export interface MainLayoutAllMDXEdge{
   node: MainLayoutAllMDXNode;
   previous: MainLayoutAllMDXNode;
 }
+
+export interface MainLayoutAllMDXParsedEdge extends MainLayoutAllMDXEdge{
+  children: Array<MainLayoutAllMDXParsedEdge>;
+  key: string;
+}
