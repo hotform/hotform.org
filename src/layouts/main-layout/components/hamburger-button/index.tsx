@@ -9,11 +9,15 @@ export interface HamburgerButtonProps extends SC.ButtonProps{
 
 const HamburgerButton: React.FC<HamburgerButtonProps> = ({
   onClick,
-  open = false
+  open = false,
+  timeout
 }) => {
   return (
     <SC.Container onClick={ onClick }>
-      <SC.Button open={ open }/>
+      <SC.Button
+        open={ open }
+        timeout={ timeout }
+      />
     </SC.Container>
   );
 }

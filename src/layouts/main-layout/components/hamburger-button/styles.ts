@@ -15,29 +15,31 @@ export const Container = styled.div(({ theme }) => ({
 
 export interface ButtonProps{
   open?: boolean;
+  timeout?: number;
 }
 
-const lineBase = (theme: Theme): CSSObject => ({
+const lineBase = (theme: Theme, timeout: number): CSSObject => ({
   width: '100%',
   height: 2,
   background: theme.colors.primary.main,
-  transitionDuration: '0.2s',
+  transitionDuration: `${timeout}ms`,
   transitionProperty: 'all',
   transitionTimingFunction: 'ease-in-out'
 });
 
 export const Button = styled.div<ButtonProps>(({
   open = false,
-  theme
+  theme,
+  timeout = 300
 }) => ({
-  ...lineBase(theme),
+  ...lineBase(theme, timeout),
   [[
     '::after',
     '::before'
   ].join()]: {
     position: 'absolute',
     content: '""',
-    ...lineBase(theme)
+    ...lineBase(theme, timeout)
   },
   '::before': {
     transform: `translate3d(0, ${theme.spacing(1)}, 0)`
