@@ -10,8 +10,15 @@ import config from '@config';
 /* Emotion */
 import { useTheme } from '@emotion/react';
 
-/* Shared Types */
-import { MainLayoutAllMDXEdge } from '@layouts/main-layout/shared';
+/* Gatsby */
+import { useLocation } from '@reach/router';
+
+/* React Icons */
+import { IoIosArrowDown } from '@react-icons/all-files/io/IoIosArrowDown';
+import { IoIosArrowUp } from '@react-icons/all-files/io/IoIosArrowUp';
+
+/* Shared */
+import { MainLayoutAllMDXParsedEdge } from '@layouts/main-layout/shared';
 
 /* Styles */
 import * as SC from './styles';
@@ -19,16 +26,71 @@ import * as SC from './styles';
 /* Themes */
 import { useMediaQuery } from '@themes';
 
-export interface MainLayoutHeaderProps{
-  edges?: Array<MainLayoutAllMDXEdge>;
+export interface MainLayoutHeaderMenuItemProps{
+  edge: MainLayoutAllMDXParsedEdge;
 }
 
-const Header: React.FC<MainLayoutHeaderProps> = ({ edges = [] }) => {
-  const navigationBarWrapperRef = React.useRef<HTMLDivElement | null>(null);
+export interface MainLayoutHeaderProps{
+  edges: Array<MainLayoutAllMDXParsedEdge>;
+}
+
+const MenuItem: React.FC<MainLayoutHeaderMenuItemProps> = ({ edge }) => {
+  const location = useLocation();
+  
+  const isActiveLink = React.useCallback((target: MainLayoutAllMDXParsedEdge) => (
+    (target.node.fields.slug.toString() === location.pathname.toString())
+      || target.children.some(isActiveLink)
+  ), []);
+  
+  const [ isExpanded, setIsExpanded ] = React.useState(isActiveLink(edge));
+  
+  const expand = React.useCallback(() => setIsExpanded(!isExpanded), [ isExpanded ]);
+  
+  const isRecursive = !!edge.children.length;
+  
+  return (
+    <SC.MenuItem>
+      <SC.MenuItemHeader>
+        <SC.MenuLink to={ edge.node.fields.slug }>
+          { edge.node.frontmatter.title }
+        </SC.MenuLink>
+        {
+          isRecursive && (
+            <div onClick={ expand }>
+              {
+                isExpanded ? <IoIosArrowUp/> : <IoIosArrowDown/>
+              }
+            </div>
+          )
+        }
+      </SC.MenuItemHeader>
+      {
+        (isRecursive && isExpanded) && (
+          <SC.MenuContainer css={ { paddingBottom: 0 } }>
+            {
+              edge.children.map((child, index) => (
+                <MenuItem
+                  edge={ child }
+                  key={ index }
+                />
+              ))
+            }
+          </SC.MenuContainer>
+        )
+      }
+    </SC.MenuItem>
+  );
+}
+
+const Header: React.FC<MainLayoutHeaderProps> = ({ edges }) => {
   const { breakpoints } = useTheme();
-  const isDesktop = useMediaQuery(breakpoints.up('md'));
-  const [ collapseNavigationBar, setCollapseNavigationBar ] = React.useState(true);
-  const handleCollapseNavigationBar = React.useCallback(() => setCollapseNavigationBar(!collapseNavigationBar), [ collapseNavigationBar ]);
+  
+  const isDesktop = useMediaQuery({ query: breakpoints.up('md') });
+  
+  const [ navigationBarIsExpanded, setNavigationBarIsExpanded ] = React.useState(false);
+  
+  const handleNavigationBarIsExpanded = React.useCallback(() => setNavigationBarIsExpanded(!navigationBarIsExpanded), [ navigationBarIsExpanded ]);
+  
   return (
     <SC.Container>
       <SC.NavigationBarControl>
@@ -38,43 +100,42 @@ const Header: React.FC<MainLayoutHeaderProps> = ({ edges = [] }) => {
         </SC.LogoContent>
         <SC.NavigationBarButton>
           <HamburgerButton
-            onClick={ handleCollapseNavigationBar }
-            open={ !collapseNavigationBar }
+            onClick={ handleNavigationBarIsExpanded }
+            open={ navigationBarIsExpanded }
+            timeout={ 0 }
           />
         </SC.NavigationBarButton>
       </SC.NavigationBarControl>
-      <SC.NavigationBarContainer
-        wrapperSize={ navigationBarWrapperRef.current?.clientHeight }
-        collapse={ isDesktop ? false : collapseNavigationBar }
-      >
-        <SC.NavigationBar ref={ navigationBarWrapperRef }>
-          <SC.MenuContainer>
-            {
-              edges.map((edge, index) => (
-                <SC.MenuItem key={ index }>
-                  <SC.MenuLink to={ edge.node.fields.slug }>
-                    { edge.node.frontmatter.title }
-                  </SC.MenuLink>
-                </SC.MenuItem>
-              ))
-            }
-            {
-              config.socialMedia.map((value, index) => (
-                <SC.MenuItem key={ index }>
-                  <a
-                    className={ SC.MenuLink.toString() }
-                    rel="noreferrer"
-                    href={ value.to }
-                    target="_blank"
-                  >
-                    { value.label }
-                  </a>
-                </SC.MenuItem>
-              ))
-            }
-          </SC.MenuContainer>
-        </SC.NavigationBar>
-      </SC.NavigationBarContainer>
+      {
+        (isDesktop || navigationBarIsExpanded) && (
+          <SC.NavigationBar>
+            <SC.MenuContainer>
+              {
+                edges.map((edge, index) => (
+                  <MenuItem
+                    edge={ edge }
+                    key={ index }
+                  />
+                ))
+              }
+              {
+                config.socialMedia.map((value, index) => (
+                  <SC.MenuItem key={ index }>
+                    <a
+                      className={ SC.MenuLink.toString() }
+                      rel="noreferrer"
+                      href={ value.to }
+                      target="_blank"
+                    >
+                      { value.label }
+                    </a>
+                  </SC.MenuItem>
+                ))
+              }
+            </SC.MenuContainer>
+          </SC.NavigationBar>
+        )
+      }
     </SC.Container>
   );
 }

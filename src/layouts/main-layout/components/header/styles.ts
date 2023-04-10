@@ -76,43 +76,26 @@ export const LogoContent = styled(Link)(({ theme }) => ({
   }
 }));
 
-export interface NavigationBarContainerProps{
-  collapse?: boolean;
-  wrapperSize?: number;
-}
-
-export const NavigationBarContainer = styled.div<NavigationBarContainerProps>(({
-  collapse = false,
-  theme,
-  wrapperSize = 0
-}) => ({
-  overflow: 'visible',
-  width: '100%',
-  height: wrapperSize,
-  opacity: 1,
-  [theme.breakpoints.down('md')]: {
-    transitionDuration: '0.25s',
-    transitionProperty: 'all',
-    transitionTimingFunction: 'ease-in-out',
-    ...(collapse && {
-      overflow: 'hidden',
-      height: 0,
-      opacity: 0
-    })
-  }
-}));
-
-export const NavigationBar = styled.nav(() => ({
+export const NavigationBar = styled.nav(({ theme }) => ({
   display: 'flex',
-  width: '100%'
+  width: '100%',
+  [theme.breakpoints.down('md')]: {
+    borderBottomColor: theme.colors.divider,
+    borderBottomStyle: 'solid',
+    borderBottomWidth: 1
+  }
 }));
 
 export const MenuContainer = styled.ul(({ theme }) => ({
   overflow: 'auto',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
   maxHeight: `calc(100vh - ${NAVIGATION_BAR_CONTROL_HEIGHT}px - ${theme.spacing(3 * 2)})`,
   width: '100%',
   margin: 0,
-  padding: 0,
+  padding: theme.spacing(2, 0),
+  gap: theme.spacing(2),
   listStyleType: 'none',
   background: theme.colors.background,
   [theme.breakpoints.down('md')]: {
@@ -123,17 +106,24 @@ export const MenuContainer = styled.ul(({ theme }) => ({
 export const MenuItem = styled.li(({ theme }) => ({
   width: '100%',
   margin: 0,
-  padding: theme.spacing(1, 2),
+  padding: theme.spacing(0, 2),
   fontSize: theme.fontSizes(2.5),
+  userSelect: 'none',
   a: {
     color: theme.colors.primary.main
   },
-  [theme.breakpoints.down('md')]: {
-    textAlign: 'center',
-    borderBottomColor: theme.colors.divider,
-    borderBottomStyle: 'solid',
-    borderBottomWidth: 1
+  svg: {
+    display: 'flex',
+    padding: theme.spacing(0.1),
+    boxSizing: 'content-box',
+    cursor: 'pointer'
   }
+}));
+
+export const MenuItemHeader = styled.div(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between'
 }));
 
 export const MenuLink = styled(Link)(() => ({
