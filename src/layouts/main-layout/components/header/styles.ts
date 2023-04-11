@@ -17,6 +17,9 @@ export const Container = styled.header(({ theme }) => ({
   outlineStyle: 'solid',
   outlineWidth: 1,
   zIndex: 1000,
+  [`input[type="checkbox"]:checked + ${NavigationBar}`]: {
+    display: 'flex'
+  },
   [theme.breakpoints.down('md')]: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -80,6 +83,7 @@ export const NavigationBar = styled.nav(({ theme }) => ({
   display: 'flex',
   width: '100%',
   [theme.breakpoints.down('md')]: {
+    display: 'none',
     borderBottomColor: theme.colors.divider,
     borderBottomStyle: 'solid',
     borderBottomWidth: 1

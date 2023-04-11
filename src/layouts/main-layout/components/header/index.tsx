@@ -7,9 +7,6 @@ import Logo from '@components/logo';
 /* Config */
 import config from '@config';
 
-/* Emotion */
-import { useTheme } from '@emotion/react';
-
 /* Gatsby */
 import { useLocation } from '@reach/router';
 
@@ -22,9 +19,6 @@ import { MainLayoutAllMDXParsedEdge } from '@layouts/main-layout/shared';
 
 /* Styles */
 import * as SC from './styles';
-
-/* Themes */
-import { useMediaQuery } from '@themes';
 
 export interface MainLayoutHeaderMenuItemProps{
   edge: MainLayoutAllMDXParsedEdge;
@@ -83,14 +77,8 @@ const MenuItem: React.FC<MainLayoutHeaderMenuItemProps> = ({ edge }) => {
 }
 
 const Header: React.FC<MainLayoutHeaderProps> = ({ edges }) => {
-  const { breakpoints } = useTheme();
-  
-  const isDesktop = useMediaQuery({ query: breakpoints.up('md') });
-  
-  const [ navigationBarIsExpanded, setNavigationBarIsExpanded ] = React.useState(false);
-  
-  const handleNavigationBarIsExpanded = React.useCallback(() => setNavigationBarIsExpanded(!navigationBarIsExpanded), [ navigationBarIsExpanded ]);
-  
+  const [ openHamburgerButton, setOpenHamburgerButton ] = React.useState(false);
+  const handleHamburgerButton = React.useCallback(() => setOpenHamburgerButton(!openHamburgerButton), [ openHamburgerButton ]);
   return (
     <SC.Container>
       <SC.NavigationBarControl>
@@ -99,43 +87,46 @@ const Header: React.FC<MainLayoutHeaderProps> = ({ edges }) => {
           <span>{ config.name }</span>
         </SC.LogoContent>
         <SC.NavigationBarButton>
-          <HamburgerButton
-            onClick={ handleNavigationBarIsExpanded }
-            open={ navigationBarIsExpanded }
-            timeout={ 0 }
-          />
+          <label htmlFor="bmF2aWdhdGlvbi1iYXItYnV0dG9u">
+            <HamburgerButton
+              onClick={ handleHamburgerButton }
+              open={ openHamburgerButton }
+              timeout={ 0 }
+            />
+          </label>
         </SC.NavigationBarButton>
       </SC.NavigationBarControl>
-      {
-        (isDesktop || navigationBarIsExpanded) && (
-          <SC.NavigationBar>
-            <SC.MenuContainer>
-              {
-                edges.map((edge, index) => (
-                  <MenuItem
-                    edge={ edge }
-                    key={ index }
-                  />
-                ))
-              }
-              {
-                config.socialMedia.map((value, index) => (
-                  <SC.MenuItem key={ index }>
-                    <a
-                      className={ SC.MenuLink.toString() }
-                      rel="noreferrer"
-                      href={ value.to }
-                      target="_blank"
-                    >
-                      { value.label }
-                    </a>
-                  </SC.MenuItem>
-                ))
-              }
-            </SC.MenuContainer>
-          </SC.NavigationBar>
-        )
-      }
+      <input
+        hidden
+        id="bmF2aWdhdGlvbi1iYXItYnV0dG9u"
+        type="checkbox"
+      />
+      <SC.NavigationBar>
+        <SC.MenuContainer>
+          {
+            edges.map((edge, index) => (
+              <MenuItem
+                edge={ edge }
+                key={ index }
+              />
+            ))
+          }
+          {
+            config.socialMedia.map((value, index) => (
+              <SC.MenuItem key={ index }>
+                <a
+                  className={ SC.MenuLink.toString() }
+                  rel="noreferrer"
+                  href={ value.to }
+                  target="_blank"
+                >
+                  { value.label }
+                </a>
+              </SC.MenuItem>
+            ))
+          }
+        </SC.MenuContainer>
+      </SC.NavigationBar>
     </SC.Container>
   );
 }
