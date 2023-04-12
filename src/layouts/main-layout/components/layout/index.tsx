@@ -2,13 +2,19 @@ import React from 'react';
 
 /* Components */
 import Footer, { MainLayoutFooterProps } from '@layouts/main-layout/components/footer';
-import Header, { MainLayoutHeaderProps } from '@layouts/main-layout/components/header';
+import Header from '@layouts/main-layout/components/header';
 
 /* Emotion */
 import {
   Global,
   ThemeProvider
 } from '@emotion/react';
+
+/* Shared */
+import {
+  parseEdges,
+  MainLayoutAllMDXEdge
+} from '@layouts/main-layout/shared';
 
 /* Styles */
 import * as SC from './styles';
@@ -19,7 +25,9 @@ import {
   lightTheme
 } from '@themes';
 
-export type MainLayoutProps = React.PropsWithChildren & MainLayoutFooterProps & MainLayoutHeaderProps;
+export interface MainLayoutProps extends React.PropsWithChildren, MainLayoutFooterProps{
+  edges: Array<MainLayoutAllMDXEdge>;
+}
 
 const MainLayout: React.FC<MainLayoutProps> = ({
   children,
@@ -30,7 +38,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
     <ThemeProvider theme={ lightTheme }>
       <Global styles={ getGlobalStyles(lightTheme) }/>
       <SC.Container>
-        <Header edges={ edges }/>
+        <Header edges={ parseEdges(edges) }/>
         <SC.ContentContainer>
           <SC.Content>
             { children }
