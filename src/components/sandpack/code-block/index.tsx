@@ -35,15 +35,19 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
       template={ template }
       theme={ sandpackTheme }
     >
-      <SandpackLayout css={ theme => ({
-        ...sandpackLayoutBase(theme),
-        '--sp-layout-height': 'auto',
-        ...(!showLineNumbers && {
-          '.sp-code-editor': {
-            padding: 0
-          }
-        })
-      }) }>
+      <SandpackLayout css={ theme => [
+        {
+          ...sandpackLayoutBase(theme),
+          '--sp-layout-height': 'auto'
+        },
+        {
+          ...(showLineNumbers && {
+            '.sp-code-editor': {
+              padding: '0 0.8em'
+            }
+          })
+        }
+      ] }>
         <SandpackCodeEditor
           readOnly
           showLineNumbers={ showLineNumbers }
