@@ -1,0 +1,108 @@
+---
+title: HotForm configuration
+description: API reference docs for the HotForm configuration. Learn about the configuration.
+keywords:
+  - hotform
+  - react
+  - form
+  - forms
+  - typescript
+  - validation
+  - hooks
+---
+
+# HotForm configuration \{#HotFormConfig\}
+
+API reference docs for the HotForm configuration. Learn about the configuration.
+
+## Contents
+
+- [`hotField`](#hotField) (boolean)
+- [`initialSchema`](#initialSchema) (object)
+- [`onInvalid`](#onInvalid) (function)
+- [`onReset`](#onReset) (function)
+- [`onValid`](#onValid) (function)
+
+### hotField \{#hotField\}
+
+`hotField?: boolean`
+
+If set to `true`, the field that changes its value will be validated. By default `true` is used.
+
+### initialSchema \{#initialSchema\}
+
+`initialSchema: HotFormSchema<T>`
+
+Initial HotForm schema.
+
+Simple examples:
+
+- [JavaScript](#javascript-schema) 
+- [TypeScript](#typescript-schema)
+
+#### JavaScript Schema
+
+<CodeBlock showLineNumbers={ false }>
+
+```js main.js active
+const userSchema = {
+  firstName: {
+    valid: true,
+    validator: value => !!value,
+    value: ''
+  },
+  lastName: {
+    valid: true,
+    validator: value => !!value,
+    value: ''
+  }
+};
+```
+
+</CodeBlock>
+
+#### TypeScript Schema
+
+<CodeBlock showLineNumbers={ false }>
+
+```ts main.ts active
+interface UserData{
+  firstName: string;
+  lastName: string;
+}
+
+const userSchema: HotFormSchema<UserData> = {
+  firstName: {
+    valid: true,
+    validator: value => !!value,
+    value: ''
+  },
+  lastName: {
+    valid: true,
+    validator: value => !!value,
+    value: ''
+  }
+};
+```
+
+</CodeBlock>
+
+<GatsbyLink to="/api/HotFormSchemaField">See more about the HotForm schema field</GatsbyLink>.
+
+### onInvalid \{#onInvalid\}
+
+`onInvalid?: HotFormInvalidityEventHandler<T>`
+
+The `onInvalid` callback is executed when the field values are invalid and the form is submitted.
+
+### onReset \{#onReset\}
+
+`onReset?: HotFormResetEventHandler<T>`
+
+The `onReset` callback is executed when the form is reset.
+
+### onValid \{#onValid\}
+
+`onValid?: HotFormValidityEventHandler<T>`
+
+The `onValid` callback is executed when the field values are valid and the form is submitted.
