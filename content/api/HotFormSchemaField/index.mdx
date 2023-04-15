@@ -1,0 +1,49 @@
+---
+title: HotForm schema field
+description: API reference docs for the HotForm schema field. Learn about the configuration.
+keywords:
+  - hotform
+  - react
+  - form
+  - forms
+  - typescript
+  - validation
+  - hooks
+---
+
+# HotForm schema field \{#HotFormSchemaField\}
+
+API reference docs for the HotForm schema field. Learn about the configuration.
+
+## Contents
+
+- [`parseValue`](#parseValue) (function)
+- [`valid`](#valid) (boolean)
+- [`validator`](#validator) (function)
+- [`value`](#value) (array | boolean | function | number | object | string | undefined)
+
+### parseValue \{#parseValue\}
+
+`parseValue?: HotFormSchemaFieldParseValue`
+
+Parses the value provided by `React.ChangeEvent<any>` to use as the current value of the field. In the case of arrays, it parses the value of each element of the array.
+
+### valid \{#valid\}
+
+`valid?: boolean`
+
+Indicates the current validity of the field.
+
+### validator \{#validator\}
+
+`validator?: HotFormSchemaFieldValidator`
+
+A custom validator function allowing you to apply your own validation rules.
+
+**Note:** The validator will be called when the schema is initialized. This will cause a field to start out as valid or invalid. If you want to handle the initial validity state of a field, you can use the `valid` key.
+
+### value \{#value\}
+
+`value: T`
+
+Indicates the current value of the field.
