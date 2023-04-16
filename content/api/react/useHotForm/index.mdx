@@ -1,0 +1,83 @@
+---
+title: useHotForm
+description: API reference docs for the useHotForm hook. Learn about the configuration and return value of this hook.
+keywords:
+  - hotform
+  - react
+  - form
+  - forms
+  - typescript
+  - validation
+  - hooks
+---
+
+# useHotForm \{#useHotForm\}
+
+API reference docs for the `useHotForm` hook. Learn about the configuration and return value of this hook.
+
+## Contents
+
+- [Type Definition](#type-definition)
+- Configuration options
+  - <GatsbyLink to="/api/HotFormConfig#hotField">`hotField`</GatsbyLink> (boolean)
+  - <GatsbyLink to="/api/HotFormConfig#initialSchema">`initialSchema`</GatsbyLink> (object)
+  - <GatsbyLink to="/api/HotFormConfig#onInvalid">`onInvalid`</GatsbyLink> (function)
+  - <GatsbyLink to="/api/HotFormConfig#onReset">`onReset`</GatsbyLink> (function)
+  - <GatsbyLink to="/api/HotFormConfig#onValid">`onValid`</GatsbyLink> (function)
+- [Return value](#return-value)
+  - <GatsbyLink to="/api/HotFormConfig#initialSchema">`currentSchema`</GatsbyLink> (object)
+  - [`handleBlur`](#handleBlur) (function)
+  - [`handleChange`](#handleChange) (function)
+  - [`handleReset`](#handleReset) (function)
+  - [`handleSubmit`](#handleSubmit) (function)
+  - [`resetSchema`](#resetSchema) (function)
+  - [`setSchemaFieldValue`](#setSchemaFieldValue) (function)
+  - [`submitting`](#submitting) (boolean)
+
+## Type Definition
+
+`useHotForm: <T>(config: HotFormConfig<T>) => UseHotFormReturnType<T>`
+
+## Return value
+
+### handleBlur \{#handleBlur\}
+
+`handleBlur: HotFormFocusEventHandler`
+
+HotForm focus event handler.
+
+### handleChange \{#handleChange\}
+
+`handleChange: HotFormChangeEventHandler`
+
+HotForm change event handler.
+
+### handleReset \{#handleReset\}
+
+`handleReset: HotFormEventHandler`
+
+Form reset event handler.
+
+### handleSubmit \{#handleSubmit\}
+
+`handleSubmit: HotFormEventHandler`
+
+Form submit event handler.
+
+### resetSchema \{#resetSchema\}
+
+`resetSchema: ResetHotFormSchema`
+
+Function to reset HotForm schema.
+
+### setSchemaFieldValue \{#setSchemaFieldValue\}
+
+`setSchemaFieldValue: SetHotFormSchemaFieldValue<T>`
+
+Function to set HotForm field value.
+
+### submitting
+
+`submitting: boolean`
+
+`submitting` state.
