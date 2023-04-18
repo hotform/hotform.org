@@ -1,0 +1,41 @@
+---
+title: useHotFormValues
+description: API reference docs for the useHotFormValues hook. Learn about the configuration and return value of this hook.
+keywords:
+  - hotform
+  - react
+  - form
+  - forms
+  - typescript
+  - validation
+  - hooks
+---
+
+# useHotFormValues \{#useHotFormValues\}
+
+API reference docs for the `useHotFormValues` hook. Learn about the configuration and return value of this hook.
+
+## Contents
+
+- [Type Definition](#type-definition)
+- Configuration options
+  - <GatsbyLink to="/api/HotFormConfig#hotField">`hotField`</GatsbyLink> (boolean)
+  - <GatsbyLink to="/api/HotFormConfig#initialSchema">`currentSchema`</GatsbyLink> (object)
+  - <GatsbyLink to="/api/HotFormConfig#onInvalid">`onInvalid`</GatsbyLink> (function)
+  - <GatsbyLink to="/api/HotFormConfig#onValid">`onValid`</GatsbyLink> (function)
+- [Return value](#return-value) (array)
+
+### Type Definition
+
+`useHotFormValues: <T>(config: Pick<HotFormConfig<T>, 'hotField' | 'initialSchema' | 'onInvalid' | 'onValid'>) => UseHotFormValuesReturnType<T>`
+
+### Return value
+
+`useHotFormValues` returns an array with exactly two values:
+
+- `HotFormValues<T>` (object)
+  - <GatsbyLink to="/api/HotFormConfig#initialSchema">`currentSchema`</GatsbyLink> (object)
+  - `runValidityEvents` (boolean)
+  - `submitting` (boolean)
+
+- `React.Dispatch<HotFormAction<T>>` (function)
