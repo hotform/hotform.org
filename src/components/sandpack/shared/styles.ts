@@ -11,7 +11,9 @@ export const sandpackLayoutBase = (theme: Theme): CSSObject => ({
   margin: '1.4em 0',
   borderColor: theme.colors.divider,
   '.sp-code-editor': {
-    '.cm-lineNumbers': {
+    '.cm-gutters': {
+      '.cm-lineNumbers': {
+        padding: '0 0.2em',
         fontSize: theme.sandpackTheme.font.size,
         color: theme.colors.text.secondary,
         '.cm-gutterElement': {
@@ -20,6 +22,7 @@ export const sandpackLayoutBase = (theme: Theme): CSSObject => ({
           alignItems: 'center',
           justifyContent: 'flex-end'
         }
+      }
     }
   },
   '.sp-stack': {

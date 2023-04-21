@@ -43,7 +43,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
         {
           ...(showLineNumbers && {
             '.sp-code-editor': {
-              padding: '0 0.8em'
+              padding: '0 0.6em'
             }
           })
         }
