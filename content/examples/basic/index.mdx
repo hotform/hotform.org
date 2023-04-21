@@ -1,0 +1,352 @@
+---
+title: Basic Examples
+description: A selection of basic examples to get started with.
+keywords:
+  - hotform
+  - react
+  - form
+  - forms
+  - typescript
+  - validation
+  - hooks
+  - text
+  - checkbox
+  - checkboxes
+  - select
+  - file
+  - radio-group
+---
+
+# Basic Examples
+
+A selection of basic examples to get started with.
+
+## Contents
+
+- [Text and Number](#text-and-number)
+- [Checkboxes](#checkboxes)
+- [Select](#select)
+- [File](#file)
+- [Radio Group](#radio-group)
+
+### Text and Number
+
+`<input>` elements of type `text` and `number`.
+
+<CodeEditor
+  dependencies={ {
+    '@hotform/react': 'latest'
+  } }
+  template="react"
+>
+
+```js App.js active
+/* HotForm */
+import { useHotForm } from '@hotform/react';
+
+const App = () => {
+  const {
+    currentSchema,
+    handleChange,
+    handleSubmit
+  } = useHotForm({
+    initialSchema: {
+      firstName: {
+        validator: value => !!value,
+        value: ''
+      },
+      lastName: {
+        validator: value => !!value,
+        value: ''
+      },
+      ticketNumber: {
+        value: 0
+      }
+    },
+    async onValid({ fieldValues }){
+      await new Promise(resolve => setTimeout(resolve, 500));
+      alert(JSON.stringify(fieldValues, null, 2));
+    }
+  });
+  return (
+    <form onSubmit={ handleSubmit }>
+      <div>
+        <label htmlFor="firstName">First Name</label>
+        <input
+          id="firstName"
+          name="firstName"
+          onChange={ handleChange }
+          placeholder="Enter your first name"
+          value={ currentSchema.firstName.value }
+        />
+      </div>
+      <div>
+        <label htmlFor="lastName">Last Name</label>
+        <input
+          id="lastName"
+          name="lastName"
+          onChange={ handleChange }
+          placeholder="Enter your last name"
+          value={ currentSchema.lastName.value }
+        />
+      </div>
+      <div>
+        <label htmlFor="ticketNumber">Ticket Number</label>
+        <input
+          id="ticketNumber"
+          name="ticketNumber"
+          onChange={ handleChange }
+          placeholder="Enter your ticketNumber"
+          type="number"
+          value={ currentSchema.ticketNumber.value }
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default App;
+```
+
+</CodeEditor>
+
+### Checkboxes
+
+`<input>` elements of type `checkbox`.
+
+<CodeEditor
+  dependencies={ {
+    '@hotform/react': 'latest'
+  } }
+  template="react"
+>
+
+```js App.js active
+/* HotForm */
+import { useHotForm } from '@hotform/react';
+
+const App = () => {
+  const {
+    currentSchema,
+    handleChange,
+    handleSubmit
+  } = useHotForm({
+    initialSchema: {
+      active: {
+        value: false
+      },
+      letters: {
+        validator: value => !!value.length,
+        value: []
+      }
+    },
+    async onValid({ fieldValues }){
+      await new Promise(resolve => setTimeout(resolve, 500));
+      alert(JSON.stringify(fieldValues, null, 2));
+    }
+  });
+  return (
+    <form onSubmit={ handleSubmit }>
+      <label>
+        <input
+          checked={ currentSchema.active.value }
+          name="active"
+          onChange={ handleChange }
+          type="checkbox"
+        />
+        { currentSchema.active.value.toString() }
+      </label>
+      <div>
+        {
+          [ 'A', 'B', 'C' ].map((letter, index) => (
+            <label key={ index }>
+              <input
+                checked={ !!currentSchema.letters.value.find(v => v === letter) }
+                name="letters"
+                onChange={ handleChange }
+                type="checkbox"
+                value={ letter }
+              />
+              { letter }
+            </label>
+          ))
+        }
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default App;
+```
+
+</CodeEditor>
+
+### Select
+
+The `<select>` HTML element.
+
+<CodeEditor
+  dependencies={ {
+    '@hotform/react': 'latest'
+  } }
+  template="react"
+>
+
+```js App.js active
+/* HotForm */
+import { useHotForm } from '@hotform/react';
+
+const App = () => {
+  const {
+    currentSchema,
+    handleChange,
+    handleSubmit
+  } = useHotForm({
+    initialSchema: {
+      letter: {
+        validator: value => !!value,
+        value: ''
+      }
+    },
+    async onValid({ fieldValues }){
+      await new Promise(resolve => setTimeout(resolve, 500));
+      alert(JSON.stringify(fieldValues, null, 2));
+    }
+  });
+  return (
+    <form onSubmit={ handleSubmit }>
+      <select
+        name="letter"
+        onChange={ handleChange }
+        style={ {
+          width: '100%'
+        } }
+        value={ currentSchema.letter.value }
+      >
+        <option value="">---</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default App;
+```
+
+</CodeEditor>
+
+### File
+
+`<input>` elements with `type="file"`.
+
+<CodeEditor
+  dependencies={ {
+    '@hotform/react': 'latest'
+  } }
+  template="react"
+>
+
+```js App.js active
+/* HotForm */
+import { useHotForm } from '@hotform/react';
+
+const App = () => {
+  const {
+    currentSchema,
+    handleChange,
+    handleSubmit
+  } = useHotForm({
+    initialSchema: {
+      avatar: {
+        validator: value => !!value,
+        value: null
+      }
+    },
+    async onValid({ fieldValues }){
+      await new Promise(resolve => setTimeout(resolve, 500));
+      alert(JSON.stringify(fieldValues, null, 2));
+    }
+  });
+  return (
+    <form onSubmit={ handleSubmit }>
+      <label htmlFor="avatar">Choose a profile picture:</label>
+      <input
+        id="avatar"
+        name="avatar"
+        onChange={ handleChange }
+        type="file"
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default App;
+```
+
+</CodeEditor>
+
+### Radio Group
+
+`<input>` elements of type `radio`.
+
+<CodeEditor
+  dependencies={ {
+    '@hotform/react': 'latest'
+  } }
+  template="react"
+>
+
+```js App.js active
+/* HotForm */
+import { useHotForm } from '@hotform/react';
+
+const App = () => {
+  const {
+    currentSchema,
+    handleChange,
+    handleSubmit
+  } = useHotForm({
+    initialSchema: {
+      role: {
+        validator: value => !!value,
+        value: ''
+      }
+    },
+    async onValid({ fieldValues }){
+      await new Promise(resolve => setTimeout(resolve, 500));
+      alert(JSON.stringify(fieldValues, null, 2));
+    }
+  });
+  return (
+    <form onSubmit={ handleSubmit }>
+      {
+        [ 'admin', 'staff' ].map((value, index) => (
+          <div key={ index }>
+            <label>
+              <input
+                checked={ currentSchema.role.value === value }
+                name="role"
+                onChange={ handleChange }
+                type="radio"
+                value={ value }
+              />
+              { value }
+            </label>
+          </div>
+        ))
+      }
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default App;
+```
+
+</CodeEditor>
