@@ -1,0 +1,301 @@
+---
+title: Material UI Example
+description: This example demonstrates how to use HotForm with Material UI.
+keywords:
+  - hotform
+  - react
+  - form
+  - forms
+  - typescript
+  - validation
+  - hooks
+  - material-ui
+---
+
+# Material UI Example
+
+This example demonstrates how to use HotForm with <a href="https://mui.com/" rel="noreferrer" target="_blank">Material UI</a>.
+
+<CodeEditor
+  dependencies={ {
+    '@emotion/react': '^11.10.6',
+    '@emotion/styled': '^11.10.6',
+    '@hotform/react': 'latest',
+    '@mui/material': '^5.12.1'
+  } }
+  template="react"
+>
+
+```js App.js active
+import React from 'react';
+
+/* HotForm */
+import { useHotForm } from '@hotform/react';
+
+/* MUI */
+import {
+  Backdrop,
+  Button,
+  Checkbox,
+  CircularProgress,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormHelperText,
+  FormLabel,
+  Grid,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  TextField
+} from '@mui/material';
+
+const App = () => {
+  const {
+    currentSchema,
+    handleChange,
+    handleSubmit,
+    submitting
+  } = useHotForm({
+    initialSchema: {
+      /* Text */
+      firstName: {
+        valid: true,
+        validator: value => !!value,
+        value: ''
+      },
+      lastName: {
+        valid: true,
+        validator: value => !!value,
+        value: ''
+      },
+      
+      /* Number */
+      ticketNumber: {
+        value: 0
+      },
+      
+      /* Checkboxes */
+      active: {
+        value: false
+      },
+      letters: {
+        valid: true,
+        validator: value => !!value.length,
+        value: [],
+      },
+      
+      /* Select */
+      letter: {
+        valid: true,
+        validator: value => !!value,
+        value: ''
+      },
+      
+      /* File */
+      avatar: {
+        valid: true,
+        validator: value => !!value,
+        value: null
+      },
+      
+      /* Radio Group */
+      role: {
+        valid: true,
+        validator: value => !!value,
+        value: ''
+      }
+    },
+    async onValid({ fieldValues }){
+      await new Promise(resolve => setTimeout(resolve, 500));
+      alert(JSON.stringify(fieldValues, null, 2));
+    }
+  });
+  return (
+    <React.Fragment>
+      <Backdrop
+        open={ submitting }
+        sx={{ zIndex: ({ zIndex }) => zIndex.drawer + 1 }}
+      >
+        <CircularProgress color="inherit"/>
+      </Backdrop>
+      <Grid
+        autoComplete="off"
+        container
+        component="form"
+        gap={ 2 }
+        onSubmit={ handleSubmit }
+        p={ 1 }
+      >
+        {/* Text */}
+        <Grid item xs={ 12 }>
+          <TextField
+            error={ !currentSchema.firstName.valid }
+            fullWidth
+            helperText={ !currentSchema.firstName.valid && 'First name invalid' }
+            label="Enter your first name"
+            name="firstName"
+            onChange={ handleChange }
+            size="small"
+            value={ currentSchema.firstName.value }
+          />
+        </Grid>
+        <Grid item xs={ 12 }>
+          <TextField
+            error={ !currentSchema.lastName.valid }
+            fullWidth
+            helperText={ !currentSchema.lastName.valid && 'Last name invalid' }
+            label="Enter your last name"
+            name="lastName"
+            onChange={ handleChange }
+            size="small"
+            value={ currentSchema.lastName.value }
+          />
+        </Grid>
+        <Grid item xs={ 12 }>
+          <TextField
+            fullWidth
+            label="Enter your ticket number"
+            name="ticketNumber"
+            onChange={ handleChange }
+            size="small"
+            type="number"
+            value={ currentSchema.ticketNumber.value }
+          />
+        </Grid>
+        
+        {/* Checkboxes */}
+        <Grid item xs={ 12 }>
+          <FormControlLabel
+            checked={ currentSchema.active.value }
+            control={ <Checkbox size="small"/> }
+            label={ currentSchema.active.value.toString() }
+            name="active"
+            onChange={ handleChange }
+          />
+        </Grid>
+        <Grid item xs={ 12 }>
+          <FormControl>
+            <FormLabel id="letter-group-label">Letters</FormLabel>
+            <FormGroup aria-labelledby="letter-group-label">
+              {
+                [ 'A', 'B', 'C' ].map((value, index) => (
+                  <FormControlLabel
+                    control={ <Checkbox size="small"/> }
+                    key={ index }
+                    label={ value }
+                    name="letters"
+                    onChange={ handleChange }
+                    value={ value }
+                    checked={ !!currentSchema.letters.value.find(v => v === value) }
+                  />
+                ))
+              }
+            </FormGroup>
+            {
+              !currentSchema.letters.valid && (
+                <FormHelperText error>
+                  Letters Invalid
+                </FormHelperText>
+              )
+            }
+          </FormControl>
+        </Grid>
+        
+        {/* Select */}
+        <Grid item xs={ 12 }>
+          <TextField
+            error={ !currentSchema.letter.valid }
+            fullWidth
+            helperText={ !currentSchema.letter.valid && 'Letter invalid' }
+            label="Select your letter"
+            name="letter"
+            select
+            size="small"
+            onChange={ handleChange }
+            value={ currentSchema.letter.value }
+          >
+            <MenuItem value="">---</MenuItem>
+            <MenuItem value="A">A</MenuItem>
+            <MenuItem value="B">B</MenuItem>
+            <MenuItem value="C">C</MenuItem>
+          </TextField>
+        </Grid>
+        
+        {/* File */}
+        <Grid item xs={ 12 }>
+          <FormControl fullWidth>
+            <Button
+              component="label"
+              size="small"
+              variant="contained"
+            >
+              Upload { currentSchema.avatar.value ? `(${currentSchema.avatar.value.name})` : null }
+              <input
+                hidden
+                name="avatar"
+                onChange={ handleChange }
+                type="file"
+              />
+            </Button>
+            {
+              !currentSchema.avatar.valid && (
+                <FormHelperText error>
+                  Avatar invalid
+                </FormHelperText>
+              )
+            }
+          </FormControl>
+        </Grid>
+        
+        {/* Radio Group */}
+        <Grid item xs={ 12 }>
+          <FormControl>
+            <FormLabel id="role-label">Role</FormLabel>
+            <RadioGroup
+              aria-labelledby="role-label"
+              name="role"
+              onChange={ handleChange }
+            >
+              {
+                [ 'admin', 'staff' ].map((value, index) => (
+                  <FormControlLabel
+                    checked={ currentSchema.role.value === value }
+                    control={ <Radio/> }
+                    key={ index }
+                    label={ value }
+                    value={ value }
+                  />
+                ))
+              }
+              {
+                !currentSchema.role.valid && (
+                  <FormHelperText error>
+                    Role invalid
+                  </FormHelperText>
+                )
+              }
+            </RadioGroup>
+          </FormControl>
+        </Grid>
+        
+        <Grid item xs={ 12 }>
+          <Button
+            disabled={ submitting }
+            fullWidth
+            size="small"
+            type="submit"
+            variant="outlined"
+          >
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
+    </React.Fragment>
+  );
+}
+
+export default App;
+```
+
+</CodeEditor>
