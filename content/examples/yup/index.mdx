@@ -1,0 +1,84 @@
+---
+title: Yup Example
+description: This example demonstrates how to use HotForm with Yup.
+keywords:
+  - hotform
+  - react
+  - form
+  - forms
+  - typescript
+  - validation
+  - hooks
+---
+
+# Yup Example
+
+This example demonstrates how to use HotForm with <a href="https://github.com/jquense/yup/" rel="noreferrer" target="_blank">Yup</a>.
+
+<CodeEditor
+  dependencies={ {
+    '@hotform/react': 'latest',
+    'yup': '^1.1.1'
+  } }
+  template="react"
+>
+
+```js App.js active
+/* HotForm */
+import { useHotForm } from '@hotform/react';
+
+/* Yup */
+import * as Yup from 'yup';
+
+const App = () => {
+  const {
+    currentSchema,
+    handleChange,
+    handleSubmit
+  } = useHotForm({
+    initialSchema: {
+      firstName: {
+        validator: value => Yup.string().required().trim().isValidSync(value),
+        value: ''
+      },
+      lastName: {
+        validator: value => Yup.string().required().trim().isValidSync(value),
+        value: ''
+      }
+    },
+    async onValid({ fieldValues }){
+      await new Promise(resolve => setTimeout(resolve, 500));
+      alert(JSON.stringify(fieldValues, null, 2));
+    }
+  });
+  return (
+    <form onSubmit={ handleSubmit }>
+      <div>
+        <label htmlFor="firstName">First Name</label>
+        <input
+          id="firstName"
+          name="firstName"
+          onChange={ handleChange }
+          placeholder="Enter your first name"
+          value={ currentSchema.firstName.value }
+        />
+      </div>
+      <div>
+        <label htmlFor="lastName">Last Name</label>
+        <input
+          id="lastName"
+          name="lastName"
+          onChange={ handleChange }
+          placeholder="Enter your last name"
+          value={ currentSchema.lastName.value }
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default App;
+```
+
+</CodeEditor>
