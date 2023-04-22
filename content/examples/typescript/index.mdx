@@ -1,0 +1,103 @@
+---
+title: TypeScript Example
+description: This example demonstrates how to use HotForm with TypeScript.
+keywords:
+  - hotform
+  - react
+  - form
+  - forms
+  - typescript
+  - validation
+  - hooks
+---
+
+# TypeScript Example
+
+This example demonstrates how to use HotForm with <a href="https://www.typescriptlang.org/" rel="noreferrer" target="_blank">TypeScript</a>.
+
+<CodeEditor
+  dependencies={ {
+    '@hotform/react': 'latest',
+    '@hotform/types': 'latest'
+  } }
+  template="react-ts"
+>
+
+```js App.tsx active
+import React from 'react';
+
+/* HotForm */
+import { useHotForm } from '@hotform/react';
+
+interface UserData{
+  firstName: string;
+  lastName: string;
+  ticketNumber: number;
+}
+
+const App: React.FC = () => {
+  const {
+    currentSchema,
+    handleChange,
+    handleSubmit
+  } = useHotForm<UserData>({
+    initialSchema: {
+      firstName: {
+        validator: value => !!value,
+        value: ''
+      },
+      lastName: {
+        validator: value => !!value,
+        value: ''
+      },
+      ticketNumber: {
+        value: 0
+      }
+    },
+    async onValid({ fieldValues }){
+      await new Promise(resolve => setTimeout(resolve, 500));
+      alert(JSON.stringify(fieldValues, null, 2));
+    }
+  });
+  return (
+    <form onSubmit={ handleSubmit }>
+      <div>
+        <label htmlFor="firstName">First Name</label>
+        <input
+          id="firstName"
+          name="firstName"
+          onChange={ handleChange }
+          placeholder="Enter your first name"
+          value={ currentSchema.firstName.value }
+        />
+      </div>
+      <div>
+        <label htmlFor="lastName">Last Name</label>
+        <input
+          id="lastName"
+          name="lastName"
+          onChange={ handleChange }
+          placeholder="Enter your last name"
+          value={ currentSchema.lastName.value }
+        />
+      </div>
+      <div>
+        <label htmlFor="ticketNumber">Ticket Number</label>
+        <input
+          id="ticketNumber"
+          name="ticketNumber"
+          onChange={ handleChange }
+          placeholder="Enter your ticketNumber"
+          type="number"
+          value={ currentSchema.ticketNumber.value }
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+export default App;
+```
+
+</CodeEditor>
