@@ -18,18 +18,36 @@ API reference docs for the `useHotFormValues` hook. Learn about the configuratio
 ## Contents
 
 - [Type Definition](#type-definition)
-- Configuration options
-  - <GatsbyLink to="/api/HotFormConfig#hotField">`hotField`</GatsbyLink> (boolean)
-  - <GatsbyLink to="/api/HotFormConfig#initialSchema">`currentSchema`</GatsbyLink> (object)
-  - <GatsbyLink to="/api/HotFormConfig#onInvalid">`onInvalid`</GatsbyLink> (function)
-  - <GatsbyLink to="/api/HotFormConfig#onValid">`onValid`</GatsbyLink> (function)
+- [Configuration Options](#configuration-options)
+  - [`hotField`](#hotField) (boolean)
+  - [`initialSchema`](#initialSchema) (object)
+  - [`onInvalid`](#onInvalid) (function)
+  - [`onValid`](#onValid) (function)
 - [Return value](#return-value) (array)
 
 ### Type Definition
 
 `useHotFormValues: <T>(config: Pick<HotFormConfig<T>, 'hotField' | 'initialSchema' | 'onInvalid' | 'onValid'>) => UseHotFormValuesReturnType<T>`
 
-### Return value
+## Configuration Options
+
+### hotField \{#hotField\}
+
+See <GatsbyLink to="/api/HotFormConfig#hotField">`hotField` option for configuration</GatsbyLink>
+
+### initialSchema \{#initialSchema\}
+
+See <GatsbyLink to="/api/HotFormConfig#initialSchema">`initialSchema` option for configuration</GatsbyLink>
+
+### onInvalid \{#onInvalid\}
+
+See <GatsbyLink to="/api/HotFormConfig#onInvalid">`onInvalid` option for configuration</GatsbyLink>
+
+### onValid \{#onValid\}
+
+See <GatsbyLink to="/api/HotFormConfig#onValid">`onValid` option for configuration</GatsbyLink>
+
+### Return Value
 
 `useHotFormValues` returns an array with exactly two values:
 
